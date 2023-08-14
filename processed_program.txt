@@ -1,0 +1,13 @@
+LD 0
+ST [30]
+LD 4
+ST [31]
+JN 12
+JZ 12
+ADD [30]
+ST [30]
+LD [31]
+SUB 1
+ST [31]
+JMP 5
+JMP 12

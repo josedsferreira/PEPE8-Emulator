@@ -46,6 +46,13 @@
         "xlocale": "cpp",
         "xlocinfo": "cpp",
         "xlocnum": "cpp",
-        "xmemory": "cpp"
+        "xmemory": "cpp",
+        "map": "cpp",
+        "xtree": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "xhash": "cpp",
+        "algorithm": "cpp",
+        "bitset": "cpp"
     }
 }
