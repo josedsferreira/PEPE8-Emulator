@@ -1,0 +1,17 @@
+N	EQU	4	; Valor pretendido para N
+soma	EQU	30	; endereço da celula da mem soma
+temp	EQU	31	; endereço da celula da mem temp
+
+inicio:	LD	0	; inicializa A com zero
+	ST	[soma]	; inicializa soma com zero
+	LD	N	; inicializa A com valor de N
+	ST	[temp]	; atualiza temp na memoria
+	JN	fim	; se temp negativo saltar para o fim
+teste:	JZ	fim	; se temp for zero saltar para o fim
+	ADD	[soma]	; adicionar soma ao registo A que é igual a temp
+	ST	[soma]	; atualiza soma na memoria
+	LD	[temp]	; vai buscar temp de novo
+	SUB	1	; decrementa A
+	ST	[temp]	; atualiza temp na memoria
+	JMP	teste	; vai ver se temp ja chegou a zero
+fim:	JMP	fim	; salta para si proprio, sinal para terminar
