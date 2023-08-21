@@ -28,6 +28,7 @@ assembler::assembler()
                                            // removes comments, blank lines, spaces, and labels
                                            // converts the program to uppercase
 
+    /*
     std::cout << "labels" << std::endl; //debugging
     for (const auto& entry : symbolTable) {
         std::cout << "Key: " << entry.first << ", Value: " << entry.second << std::endl;
@@ -36,6 +37,7 @@ assembler::assembler()
     for (const auto& entry : lineAddressTable) {
         std::cout << "Key: " << entry.first << ", Value: " << entry.second << std::endl;
     }
+    */
 
     std::cout << "Starting final assembly " << std::endl;
 
@@ -168,6 +170,28 @@ std::string assembler::decimalToBinary(const std::string& decimalStr) {
 
     return binaryStr;
 }
+
+std::string assembler::decimalToBinary2C(const std::string& decimalStr) {
+    // Convert the decimal string to an integer
+    int decimalValue = std::stoi(decimalStr);
+
+    // If the decimal value is negative, convert to two's complement
+    if (decimalValue < 0) {
+        // Calculate the positive counterpart
+        int positiveCounterpart = (1 << 8) + decimalValue;
+
+        // Convert the positive counterpart to binary string
+        std::string binaryStr = std::bitset<8>(positiveCounterpart).to_string();
+
+        return binaryStr;
+    }
+
+    // Convert the positive decimal value to binary string
+    std::string binaryStr = std::bitset<8>(decimalValue).to_string();
+
+    return binaryStr;
+}
+
 
 void assembler::preprocessor(std::ifstream &in_file)
 {
@@ -356,25 +380,25 @@ void assembler::finalAssembly(std::ifstream &file, std::ofstream &out_file) {
 
         while (iss >> instruction >> operand) {
 
-            std::string memoryAddress;
+            std::string constant;
             std::string opcode;
 
             if (assembler::trim(operand).front() == '[') // If operand is a memory address
             {
-                memoryAddress = assembler::trim(operand).substr(1, assembler::trim(operand).length() - 2); // Remove brackets
+                constant = assembler::trim(operand).substr(1, assembler::trim(operand).length() - 2); // Remove brackets
                 
-                if (memoryAddress.back() == 'H') { // address is in hexadecimal
-                    if (memoryAddress.length() > 3) { // if the address is bigger than 16 bits
-                        std::cerr << "Invalid memory address: " << memoryAddress << " Cant be bigger than FF" << std::endl;
+                if (constant.back() == 'H') { // address is in hexadecimal
+                    if (constant.length() > 3) { // if the address is bigger than 16 bits
+                        std::cerr << "Invalid memory address: " << constant << " Cant be bigger than FF" << std::endl;
                         return;
                     }
                     
-                    memoryAddress = assembler::hexToBinary(memoryAddress);
+                    constant = assembler::hexToBinary(constant);
                 }
                 else {
-                    memoryAddress = assembler::decimalToBinary(memoryAddress);
-                    if (memoryAddress.length() > 8) { // if the address is bigger than 8 bits
-                        std::cerr << "Invalid memory address: " << memoryAddress << " Max 8 bits" << std::endl;
+                    constant = assembler::decimalToBinary(constant);
+                    if (constant.length() > 8) { // if the address is bigger than 8 bits
+                        std::cerr << "Invalid memory address: " << constant << " Max 8 bits" << std::endl;
                         return;
                     }
                 }
@@ -393,12 +417,12 @@ void assembler::finalAssembly(std::ifstream &file, std::ofstream &out_file) {
                         return;
                     }
                     
-                    memoryAddress = assembler::hexToBinary(operand);
+                    constant = assembler::hexToBinary(operand);
                 }
                 else {
-                    memoryAddress = assembler::decimalToBinary(operand);
-                    if (memoryAddress.length() > 8) { // if the address is bigger than 8 bits
-                        std::cerr << "Invalid operand: " << memoryAddress << "Max 8 bits" << std::endl;
+                    constant = assembler::decimalToBinary2C(operand);
+                    if (constant.length() > 8) { // if the address is bigger than 8 bits
+                        std::cerr << "Invalid operand: " << constant << "Max 8 bits" << std::endl;
                         return;
                     }
                 }
@@ -411,13 +435,13 @@ void assembler::finalAssembly(std::ifstream &file, std::ofstream &out_file) {
                 }
             }
             
-            processedLine += opcode + memoryAddress;
+            processedLine += opcode + constant;
 
             if (!processedLine.empty()) {
                 out_file << processedLine << std::endl;
             }
 
-            std::cout << "processed line: " << processedLine << std::endl; //debugging
+            //std::cout << "processed line: " << processedLine << std::endl; //debugging
         }
     }
 

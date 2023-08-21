@@ -40,6 +40,8 @@ public:
 
     std::string decimalToBinary(const std::string& decimalString); //helper function - converts a decimal string to binary
     
+    std::string decimalToBinary2C(const std::string& decimalStr); //helper function - converts a decimal string to binary in 2's complement
+
     void preprocessor(std::ifstream &file); //prepares the program to be assembled
 
     void finalAssembly(std::ifstream &file, std::ofstream &out_file); //converts the prepared program to binary instructions
