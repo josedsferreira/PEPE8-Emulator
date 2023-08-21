@@ -28,6 +28,7 @@ assembler::assembler()
                                            // removes comments, blank lines, spaces, and labels
                                            // converts the program to uppercase
 
+    /*
     std::cout << "labels" << std::endl; //debugging
     for (const auto& entry : symbolTable) {
         std::cout << "Key: " << entry.first << ", Value: " << entry.second << std::endl;
@@ -36,6 +37,7 @@ assembler::assembler()
     for (const auto& entry : lineAddressTable) {
         std::cout << "Key: " << entry.first << ", Value: " << entry.second << std::endl;
     }
+    */
 
     std::cout << "Starting final assembly " << std::endl;
 
@@ -439,7 +441,7 @@ void assembler::finalAssembly(std::ifstream &file, std::ofstream &out_file) {
                 out_file << processedLine << std::endl;
             }
 
-            std::cout << "processed line: " << processedLine << std::endl; //debugging
+            //std::cout << "processed line: " << processedLine << std::endl; //debugging
         }
     }
 

@@ -3,6 +3,8 @@
 #include <string>
 #include <fstream>
 #include <bitset>
+#include <cstdint>
+#include <map>
 
 class PEPE8 {
 
@@ -15,14 +17,15 @@ public:
     void clock(); //Runs the processor and the program
 
     //2 memories (teoretically they exist outside the processor):
-    std::array<int8_t, 1 * 1024> data; 
-    //1KB not sure how much i need or how much there is in the real processor
-    std::array<uint16_t, 255> instructions; 
+    std::array<int8_t, 1 * 1024> data; //1KB not sure how much i need or 
+                                        //how much there is in the real processor
+
+    std::array<uint16_t, 255> instructions;
     // 255 positions in the array (number of addresses allowed in 8bits). 2 bytes per instruction
     //Program is loadded in this memory one line/instruction per position
 
     //Registers:
-    uint8_t PC = 0; //Program Counter
+    int PC = 0; //Program Counter
     int8_t A; //Accumulator
     uint8_t SEL_PC;
     uint8_t SEL_ALU;
@@ -33,8 +36,15 @@ public:
 
     //Helper variables:
     uint16_t instructions_end = 0xFFFF; //signal end of the positions used of the array
-    uint8_t instruction; //current instruction
+    int8_t instruction; //current instruction
     int8_t operand; //current operand
+
+    //Decoder maps and functions to help the gui
+    std::map<std::string, std::string> decoderMap; //map to help gui decode the instructions
+    std::array<std::string, 255> decoded_instructions; //array with instructions as strings with the  to help gui
+    void decoder(std::string line, int i); //decodes the instruction and operand into a string for the gui
+    void checkProgram(); //for debugging
+    bool haltFlag = false; //flag to signal gui to draw halt screen
 
     //Assembly instruction functions:
     void LD(int8_t operand); //Load register A with operand
@@ -51,6 +61,5 @@ public:
     void JMP(int8_t operand); //Jump to instruction with memory address operand
     void JZ(int8_t operand); //Jump to instruction with memory address operand if register A is zero
     void JN(int8_t operand); //Jump to instruction with memory address operand if register A is negative
-    
     
 };
