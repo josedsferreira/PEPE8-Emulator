@@ -78,7 +78,7 @@ public:
 				}
 				else
 				{
-					DrawString(x, y, hex(memory, 2), olc::DARK_BLUE);
+					DrawString(x, y, hex(memory, 2), olc::BLUE);
 				}
 				
 				nAddr += 1;
@@ -159,6 +159,7 @@ public:
 	{
 		if (GetKey(olc::Key::SPACE).bPressed) processor.clock();
 		if (GetKey(olc::Key::D).bPressed) darkmode = !darkmode;
+		if (GetKey(olc::Key::R).bPressed) processor.reset();
 
 		if (darkmode)
 		{
@@ -173,7 +174,8 @@ public:
 		DrawRamCells(5, 5);
 		DrawCpu(448, 5);
 		DrawString(10, 170, "SPACE = Step Instruction");
-		DrawString(10, 180, "D = Dark Mode ON/OFF");
+		DrawString(10, 180, "R = Reset processor");
+		DrawString(10, 190, "D = Dark Mode ON/OFF");
 		DrawString(10, 285, "josedsferreira.github.io", olc::GREY);
 
 		if (processor.haltFlag)

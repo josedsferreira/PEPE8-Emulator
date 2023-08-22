@@ -15,6 +15,7 @@ public:
     //Functions:
     void loadProgram();
     void clock(); //Runs the processor and the program
+    void reset(); //Resets the processor and the program
 
     //2 memories (teoretically they exist outside the processor):
     std::array<int8_t, 1 * 1024> data; //1KB not sure how much i need or 

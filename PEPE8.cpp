@@ -151,6 +151,18 @@ void PEPE8::decoder(std::string line, int i) {
         decoded_instructions[i] = std::to_string(i) + ": " + decoded_opcode + " " + decoded_operand;
 }
 
+void PEPE8::reset() {
+    PC = 0;
+    A = 0;
+    SEL_PC = 0;
+    SEL_ALU = 0;
+    ESCR_A = false;
+    SEL_A = false;
+    SEL_B = false;
+    WR = false;
+    haltFlag = false;
+}
+
 void PEPE8::clock() {
 
     if (PC < instructions.size() && instructions[PC] != instructions_end)
