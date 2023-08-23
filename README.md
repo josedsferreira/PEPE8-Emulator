@@ -5,6 +5,8 @@
 The PEPE-8 Emulator is a program that emulates the operation of the PEPE-8 computer architecture.
 It allows you to load and execute programs written in the PEPE-8 assembly language and provides a  graphical user interface to visualize the operation of the processor, including the state of the registers, memory, and program execution.
 
+![Project Demo](./demo.gif)
+
 ## Features
 
 - Assembler of PEPE-8 Assembly code capable of converting the code into binary code
