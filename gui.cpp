@@ -66,7 +66,14 @@ public:
 
 		for (int row = 0; row < nRows; row++)
 		{
-			DrawString(x, y, (hex(nAddr, 2) + "H" + ":"));
+			if(darkmode)
+			{
+				DrawString(x, y, (hex(nAddr, 2) + "H" + ":"));
+			}
+			else
+			{
+				DrawString(x, y, (hex(nAddr, 2) + "H" + ":"), olc::BLACK);
+			}
 			x += 10;
 			for (int col = 0; col < nColumns; col++)
 			{
@@ -74,7 +81,14 @@ public:
 				int8_t memory = processor.data[nAddr];
 				if (memory == 0)
 				{
-					DrawString(x, y, hex(memory, 2));
+					if (darkmode)
+					{
+						DrawString(x, y, hex(memory, 2));
+					}
+					else
+					{
+						DrawString(x, y, hex(memory, 2), olc::BLACK);
+					}
 				}
 				else
 				{
@@ -90,16 +104,33 @@ public:
 
 	void DrawCpu(int x, int y)
 	{
-		DrawString(x , y , "PEPE-8:", olc::YELLOW);
-		//DrawString(x  + 64, y, "N", nes.cpu.status & olc6502::N ? olc::GREEN : olc::RED);
-		DrawString(x , y + 15, "PC: " + hex(processor.PC, 4) + " H");
-		DrawString(x , y + 30, "A: " +  std::to_string(processor.A) + "d  [" + hex(processor.A, 2) + " H]");
-		DrawString(x , y + 45, "SEL_PC: " +  bin(processor.SEL_PC));
-		DrawString(x , y + 60, "SEL_ALU: " +  bin(processor.SEL_ALU));
-		DrawString(x , y + 75, "ESCR_A: " +  std::to_string(processor.ESCR_A));
-		DrawString(x , y + 90, "SEL_A: " +  std::to_string(processor.SEL_A));
-		DrawString(x , y + 105, "SEL_B: " +  std::to_string(processor.SEL_B));
-		DrawString(x , y + 120, "WR: " +  std::to_string(processor.WR));
+		if (darkmode)
+		{
+			DrawString(x , y , "PEPE-8:", olc::YELLOW);
+			//DrawString(x  + 64, y, "N", nes.cpu.status & olc6502::N ? olc::GREEN : olc::RED);
+			DrawString(x , y + 15, "PC: " + hex(processor.PC, 4) + " H");
+			DrawString(x , y + 30, "A: " +  std::to_string(processor.A) + "d  [" + hex(processor.A, 2) + " H]");
+			DrawString(x , y + 45, "SEL_PC: " +  bin(processor.SEL_PC));
+			DrawString(x , y + 60, "SEL_ALU: " +  bin(processor.SEL_ALU));
+			DrawString(x , y + 75, "ESCR_A: " +  std::to_string(processor.ESCR_A));
+			DrawString(x , y + 90, "SEL_A: " +  std::to_string(processor.SEL_A));
+			DrawString(x , y + 105, "SEL_B: " +  std::to_string(processor.SEL_B));
+			DrawString(x , y + 120, "WR: " +  std::to_string(processor.WR));
+		}
+		else
+		{
+			DrawString(x , y , "PEPE-8:", olc::DARK_YELLOW);
+			//DrawString(x  + 64, y, "N", nes.cpu.status & olc6502::N ? olc::GREEN : olc::RED);
+			DrawString(x , y + 15, "PC: " + hex(processor.PC, 4) + " H", olc::BLACK);
+			DrawString(x , y + 30, "A: " +  std::to_string(processor.A) + "d  [" + hex(processor.A, 2) + " H]", olc::BLACK);
+			DrawString(x , y + 45, "SEL_PC: " +  bin(processor.SEL_PC), olc::BLACK);
+			DrawString(x , y + 60, "SEL_ALU: " +  bin(processor.SEL_ALU), olc::BLACK);
+			DrawString(x , y + 75, "ESCR_A: " +  std::to_string(processor.ESCR_A), olc::BLACK);
+			DrawString(x , y + 90, "SEL_A: " +  std::to_string(processor.SEL_A), olc::BLACK);
+			DrawString(x , y + 105, "SEL_B: " +  std::to_string(processor.SEL_B), olc::BLACK);
+			DrawString(x , y + 120, "WR: " +  std::to_string(processor.WR), olc::BLACK);
+		}
+		
 	}
 
 	void DrawCode(int x, int y, int nLines)
@@ -119,14 +150,28 @@ public:
 		int nLineY = (nLines >> 1) * 10 + y; //number of lines divided by 2 times 10 (height of each line) plus y (starting point)
 		if (j < programSize)
 		{
-			DrawString(x, nLineY, processor.decoded_instructions[j], olc::CYAN);
+			if (darkmode)
+			{
+				DrawString(x, nLineY, processor.decoded_instructions[j], olc::CYAN);
+			}
+			else
+			{
+				DrawString(x, nLineY, processor.decoded_instructions[j], olc::DARK_CYAN);
+			}
 			while (nLineY < (nLines * 10) + y)
 			{
 				nLineY += 10;
 				++j;
 				if (j < programSize)
 				{
-					DrawString(x, nLineY, processor.decoded_instructions[j]);
+					if (darkmode)
+					{
+						DrawString(x, nLineY, processor.decoded_instructions[j]);
+					}
+					else
+					{
+						DrawString(x, nLineY, processor.decoded_instructions[j], olc::BLACK);
+					}
 				}
 			}
 		}
@@ -142,7 +187,14 @@ public:
 				--j;
 				if (j >= 0)
 				{
-					DrawString(x, nLineY, processor.decoded_instructions[j]);
+					if (darkmode)
+					{
+						DrawString(x, nLineY, processor.decoded_instructions[j]);
+					}
+					else
+					{
+						DrawString(x, nLineY, processor.decoded_instructions[j], olc::BLACK);
+					}
 				}
 			}
 		}
@@ -167,16 +219,26 @@ public:
 		}
 		else
 		{
-			Clear(olc::DARK_GREY);
+			Clear(olc::GREY);
 		}
 		
 		DrawCode(448, 150, 12);
 		DrawRamCells(5, 5);
 		DrawCpu(448, 5);
-		DrawString(10, 170, "SPACE = Step Instruction");
-		DrawString(10, 180, "R = Reset processor");
-		DrawString(10, 190, "D = Dark Mode ON/OFF");
-		DrawString(10, 285, "josedsferreira.github.io", olc::GREY);
+		if (darkmode)
+		{
+			DrawString(10, 170, "SPACE = Step Instruction");
+			DrawString(10, 180, "R = Reset processor");
+			DrawString(10, 190, "D = Dark Mode ON/OFF");
+			DrawString(10, 285, "josedsferreira.github.io", olc::GREY);
+		}
+		else
+		{
+			DrawString(10, 170, "SPACE = Step Instruction", olc::BLACK);
+			DrawString(10, 180, "R = Reset processor", olc::BLACK);
+			DrawString(10, 190, "D = Dark Mode ON/OFF", olc::BLACK);
+			DrawString(10, 285, "josedsferreira.github.io", olc::DARK_CYAN);
+		}
 
 		if (processor.haltFlag)
 		{
