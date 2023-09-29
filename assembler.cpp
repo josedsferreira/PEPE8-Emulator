@@ -392,7 +392,7 @@ void assembler::finalAssembly(std::ifstream &file, std::ofstream &out_file) {
                         std::cerr << "Invalid memory address: " << constant << " Cant be bigger than FF" << std::endl;
                         return;
                     }
-                    
+                    constant.pop_back(); // Remove H
                     constant = assembler::hexToBinary(constant);
                 }
                 else {
@@ -416,7 +416,7 @@ void assembler::finalAssembly(std::ifstream &file, std::ofstream &out_file) {
                         std::cerr << "Invalid operand: " << operand << "Cant be bigger than FF" << std::endl;
                         return;
                     }
-                    
+                    operand.pop_back(); // Remove H
                     constant = assembler::hexToBinary(operand);
                 }
                 else {
