@@ -427,7 +427,7 @@ void PEPE8::AND_m(int8_t operand) {
 void PEPE8::OR(int8_t operand) {
     A |= operand;
     SEL_PC = 0; //no jump
-    SEL_ALU = 2; //and
+    SEL_ALU = 3; //and
     ESCR_A = true; //write to A
     SEL_A = false; //ALU is the source
     SEL_B = false; //operand is the source
@@ -438,7 +438,7 @@ void PEPE8::OR(int8_t operand) {
 void PEPE8::OR_m(int8_t operand) {
     A |= data[operand];
     SEL_PC = 0; //no jump
-    SEL_ALU = 2; //and
+    SEL_ALU = 3; //and
     ESCR_A = true; //write to A
     SEL_A = false; //ALU is the source
     SEL_B = true; //memory is the source

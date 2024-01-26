@@ -42,7 +42,7 @@ public:
 
     //Decoder maps and functions to help the gui
     std::map<std::string, std::string> decoderMap; //map to help gui decode the instructions
-    std::array<std::string, 255> decoded_instructions; //array with instructions as strings with the  to help gui
+    std::array<std::string, 255> decoded_instructions; //array with instructions as strings with the to help gui
     void decoder(std::string line, int i); //decodes the instruction and operand into a string for the gui
     void checkProgram(); //for debugging
     bool haltFlag = false; //flag to signal gui to draw halt screen
